@@ -41,8 +41,19 @@ app.post("/calculate", (req, res) => {
   const totalIncome = profitShare + salary; // total income
 
   const taxableIncome = Math.max(0, totalIncome - 12570); // Subtract the personal allowance
+  let incomeTax = 0; // Initialize incomeTax variable
+  if (taxableIncome < 37700) {
+    incomeTax = taxableIncome * 0.2; // 20% incomeTax rate for income up to £37,700
+    console.log(`The total incomeTax is £${incomeTax}`);
+  } else if (taxableIncome >= 37700 && taxableIncome <= 112570) {
+    incomeTax = 7540 + (taxableIncome - 37700) * 0.4; // 20% incomeTax for the first £37,700 and 40% for the rest
+    console.log(`The total incomeTax is £${incomeTax}`);
+  } else {
+    incomeTax = 7540 + 74870 * 0.4 + (taxableIncome - 112570) * 0.45; // 20% for the first £37,700, 40% for the next £74870, and 45% for the rest
+    console.log(`The total incomeTax is £${incomeTax}`);
+  }
   // Respond with the calculated profit
-  res.json({ profit, profitShare, totalIncome, taxableIncome });
+  res.json({ profit, profitShare, totalIncome, taxableIncome, incomeTax });
 });
 
 /* // Wildcard route to handle undefined routes
