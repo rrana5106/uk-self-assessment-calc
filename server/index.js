@@ -27,12 +27,12 @@ app.get("/", (req, res) => {
 });
 
 // Handle POST request at the /calculate route
-app.post("/calculate", (req, res) => {
-  // Extract the gross rental income and rental expenses from the request body
-  const { grossRentalIncome, rentalExpenses, salary } = req.body;
+app.post("/calculate", async (req, res) => {
+  // Extract the gross rental income and gross rental expenses from the request body
+  const { grossRentalIncome, grossRentalExpenses, salary } = req.body;
 
   // Call the calculateProfit function with the provided values
-  const profit = calculateProfit(grossRentalIncome, rentalExpenses);
+  const profit = calculateProfit(grossRentalIncome, grossRentalExpenses);
 
   const mySharePercentage = 0.5; // Define the percentage for your share
 
