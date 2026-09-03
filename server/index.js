@@ -27,9 +27,25 @@ app.get("/", (req, res) => {
 });
 
 // Handle POST request at the /calculate route
-app.post("/calculate", async (req, res) => {
+app.post("/calculate", (req, res) => {
   // Extract the gross rental income and gross rental expenses from the request body
   const { grossRentalIncome, grossRentalExpenses, salary } = req.body;
+
+  if(grossRentalIncome === undefined || grossRentalExpenses === undefined || salary === undefined) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+  
+  // Log the received data for debugging purposes
+  console.log("Received data from client:", { grossRentalIncome, grossRentalExpenses, salary });
+
+  // Validate the input values
+  if (
+    typeof grossRentalIncome !== "number" ||
+    typeof grossRentalExpenses !== "number" ||
+    typeof salary !== "number"
+  ) {
+    return res.status(400).json({ error: "Invalid input types" });
+  }
 
   // Call the calculateProfit function with the provided values
   const profit = calculateProfit(grossRentalIncome, grossRentalExpenses);
@@ -42,7 +58,8 @@ app.post("/calculate", async (req, res) => {
 
   const taxableIncome = Math.max(0, totalIncome - 12570); // Subtract the personal allowance
   let incomeTax = 0; // Initialize incomeTax variable
-  if (taxableIncome < 37700) {
+
+  if (taxableIncome < 37700 ) {
     incomeTax = taxableIncome * 0.2; // 20% incomeTax rate for income up to £37,700
     console.log(`The total incomeTax is £${incomeTax}`);
   } else if (taxableIncome >= 37700 && taxableIncome <= 112570) {

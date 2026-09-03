@@ -6,6 +6,7 @@ function App() {
   const [grossRentalIncome, setGrossRentalIncome] = useState(0);
   const [grossRentalExpenses, setGrossRentalExpenses] = useState(0);
   const [salary, setSalary] = useState(0);
+  const [result, setResult] = useState(null);
 
   return (
     <>
@@ -32,14 +33,12 @@ function App() {
               if (!response.ok) {
                 throw new Error(`Server responded with ${response.status}`);
               }
-              const result = await response.json();
-              console.log("Received data from server:", result);
-              alert(
-                `Profit: £${result.profit}\nProfit Share: £${result.profitShare}\nTotal Income: £${result.totalIncome}\nTaxable Income: £${result.taxableIncome}\nIncome Tax: £${result.incomeTax}`,
-              );
+              const responseData = await response.json();
+              console.log("Received data from server:", responseData);
+
+              setResult(responseData);
             } catch (error) {
-              console.error("Error:", error);
-              alert("An error occurred while calculating profit.");
+              console.error("Error during fetch:", error);
             }
           }}
         >
@@ -74,6 +73,16 @@ function App() {
             />
           </p>
           <button type="submit">Calculate</button>
+          {result && (
+            <div className="result">
+              <h2>Results</h2>
+              <p>Profit: £{result.profit}</p>
+              <p>Profit Share: £{result.profitShare}</p>
+              <p>Total Income: £{result.totalIncome}</p>
+              <p>Taxable Income: £{result.taxableIncome}</p>
+              <p>Income Tax: £{result.incomeTax.toFixed(2)}</p>
+            </div>
+          )}
         </form>
       </div>
     </>
