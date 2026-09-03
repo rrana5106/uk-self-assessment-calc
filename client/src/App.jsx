@@ -7,6 +7,7 @@ function App() {
   const [grossRentalExpenses, setGrossRentalExpenses] = useState(0);
   const [salary, setSalary] = useState(0);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
 
   return (
     <>
@@ -15,6 +16,8 @@ function App() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
+            setResult(null);
+setError(null);
             const data = {
               grossRentalIncome,
               grossRentalExpenses,
@@ -39,6 +42,8 @@ function App() {
               setResult(responseData);
             } catch (error) {
               console.error("Error during fetch:", error);
+
+              setError(error.message);
             }
           }}
         >
@@ -81,8 +86,11 @@ function App() {
               <p>Total Income: £{result.totalIncome}</p>
               <p>Taxable Income: £{result.taxableIncome}</p>
               <p>Income Tax: £{result.incomeTax.toFixed(2)}</p>
+              
             </div>
           )}
+
+          {error && <p className="error">{error}</p>}
         </form>
       </div>
     </>
