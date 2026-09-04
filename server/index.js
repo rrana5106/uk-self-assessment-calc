@@ -29,19 +29,35 @@ app.get("/", (req, res) => {
 // Handle POST request at the /calculate route
 app.post("/calculate", (req, res) => {
   // Extract the gross rental income and gross rental expenses from the request body
-  const { grossRentalIncome, grossRentalExpenses, salary } = req.body;
+  const {
+    grossRentalIncome,
+    grossRentalExpenses,
+    profitSharePercentage,
+    salary,
+  } = req.body;
 
-  if(grossRentalIncome === undefined || grossRentalExpenses === undefined || salary === undefined) {
+  if (
+    grossRentalIncome === undefined ||
+    grossRentalExpenses === undefined ||
+    profitSharePercentage === undefined ||
+    salary === undefined
+  ) {
     return res.status(400).json({ error: "Missing required fields" });
   }
-  
+
   // Log the received data for debugging purposes
-  console.log("Received data from client:", { grossRentalIncome, grossRentalExpenses, salary });
+  console.log("Received data from client:", {
+    grossRentalIncome,
+    grossRentalExpenses,
+    profitSharePercentage,
+    salary,
+  });
 
   // Validate the input values
   if (
     typeof grossRentalIncome !== "number" ||
     typeof grossRentalExpenses !== "number" ||
+    typeof profitSharePercentage !== "number" ||
     typeof salary !== "number"
   ) {
     return res.status(400).json({ error: "Invalid input types" });
@@ -50,7 +66,7 @@ app.post("/calculate", (req, res) => {
   // Call the calculateProfit function with the provided values
   const profit = calculateProfit(grossRentalIncome, grossRentalExpenses);
 
-  const mySharePercentage = 0.5; // Define the percentage for your share
+  const mySharePercentage = profitSharePercentage; // Define the percentage for your share
 
   const profitShare = profit * mySharePercentage;
 
@@ -59,7 +75,7 @@ app.post("/calculate", (req, res) => {
   const taxableIncome = Math.max(0, totalIncome - 12570); // Subtract the personal allowance
   let incomeTax = 0; // Initialize incomeTax variable
 
-  if (taxableIncome < 37700 ) {
+  if (taxableIncome < 37700) {
     incomeTax = taxableIncome * 0.2; // 20% incomeTax rate for income up to £37,700
     console.log(`The total incomeTax is £${incomeTax}`);
   } else if (taxableIncome >= 37700 && taxableIncome <= 112570) {
