@@ -27,7 +27,7 @@ function App() {
             };
             console.log("Sending data to server:", data);
             try {
-              const response = await fetch("http://localhost:3001/calculate", {
+              const response = await fetch(import.meta.env.VITE_API_URL, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
