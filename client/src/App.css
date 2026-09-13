@@ -65,6 +65,11 @@ button[type="submit"]:hover {
   opacity: 0.9;
 }
 
+button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .result {
   margin-top: 24px;
   padding-top: 20px;

@@ -9,6 +9,7 @@ function App() {
   const [salary, setSalary] = useState(0);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
@@ -21,6 +22,7 @@ function App() {
               e.preventDefault();
               setResult(null);
               setError(null);
+              setIsLoading(true);
               const data = {
                 grossRentalIncome,
                 grossRentalExpenses,
@@ -48,6 +50,8 @@ function App() {
                 console.error("Error during fetch:", error);
 
                 setError(error.message);
+              } finally {
+                setIsLoading(false);
               }
             }}
           >
@@ -92,9 +96,7 @@ function App() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="salary">
-                Enter the salary: £
-              </label>
+              <label htmlFor="salary">Enter the salary: £</label>
               <input
                 id="salary"
                 type="number"
@@ -104,7 +106,9 @@ function App() {
                 }}
               />
             </div>
-            <button type="submit">Calculate</button>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "Calculating..." : "Calculate"}
+            </button>
             {result && (
               <div className="result">
                 <h2>Results</h2>
