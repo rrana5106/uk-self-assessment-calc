@@ -1,6 +1,4 @@
-# UK Self Assessment Calculator 
-
-
+# UK Self Assessment Calculator
 
 A practice fullstack project: a calculator that estimates UK self-assessment
 tax based on rental income, rental expenses, a configurable profit-share
@@ -15,6 +13,7 @@ devops course.
   Node (`process.env.PORT`)
 
 ## Project Structure
+
 ```
 uk-self-assessment-calc/
 ├── client/ # React frontend (Vite)
@@ -22,6 +21,7 @@ uk-self-assessment-calc/
 ```
 
 ## Server Setup
+
 ```
 cd server
 npm install
@@ -42,8 +42,6 @@ Not yet rebuilt (in progress).
 
 ## Status
 
-16 Sep 2026
-
-Rebuilding from scratch as of [today's date] to clean up the codebase
+Rebuilding from scratch as of 16 Sep 2026 to clean up the codebase
 after several rounds of iterative debugging. See git history for the
 previous working version.
