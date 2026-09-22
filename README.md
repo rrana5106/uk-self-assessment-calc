@@ -34,7 +34,9 @@ the environment, for deployment).
 ### Routes (so far)
 
 - `GET /` — health check, returns a welcome message.
-- `POST /calculate` — not yet rebuilt (in progress).
+- `POST /calculate` — accepts `{ incomeItems, expenseItems, profitSharePercentage, salary }`
+  (incomeItems/expenseItems are arrays of `{ label, amount }`) and returns
+  `{ totalRentalIncome, totalExpense, profit, profitShare, totalIncome, taxableIncome, tax, netIncome }`.
 
 ## Client Setup
 
