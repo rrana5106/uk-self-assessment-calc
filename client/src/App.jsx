@@ -24,13 +24,16 @@ function App() {
   return (
     <>
       <h1>UK SELF ASSESSMENT CALCULATOR</h1>
-      Enter the income items: <input type="number" />
-      <button onClick={setAddIncome}>Add</button>
-      <button>Remove</button>
+      {/* Enter the income items: <input type="number" /> */}
       <div>
+        <button onClick={setAddIncome}>Add</button>
         {incomeItems.map((item) => (
           <div key={item.id}>
+            <label htmlFor={`income-label-${item.id}`}>
+              Enter the income items:
+            </label>
             <input
+              id={`income-label-${item.id}`}
               value={item.label}
               onChange={(e) =>
                 updateIncomeItem(item.id, "label", e.target.value)
@@ -40,9 +43,16 @@ function App() {
               type="number"
               value={item.amount}
               onChange={(e) =>
-                updateIncomeItem(item.id, "amount", e.target.value)
+                updateIncomeItem(item.id, "amount", Number(e.target.value))
               }
             />
+            <button
+              onClick={() => {
+                removeIncomeItem(item.id);
+              }}
+            >
+              Remove
+            </button>
           </div>
         ))}
       </div>
