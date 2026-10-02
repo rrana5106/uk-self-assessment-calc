@@ -11,6 +11,10 @@ function App() {
     { id: 1, label: "", amount: 0 },
   ]);
 
+  const [salary, setSalary] = useState(0);
+
+  const [profitSharePercentage, setProfitSharePercentage] = useState(0);
+
   function setAddExpense() {
     setExpenseItems([
       ...expenseItems,
@@ -44,6 +48,14 @@ function App() {
 
   function removeExpenseItem(id) {
     setExpenseItems(expenseItems.filter((item) => item.id !== id));
+  }
+
+  function handleSalaryChange(e) {
+    setSalary(Number(e.target.value));
+  }
+
+  function handleProfitPercentageChange(e) {
+    setProfitSharePercentage(Number(e.target.value));
   }
 
   return (
@@ -81,6 +93,27 @@ function App() {
           </div>
         ))}
       </div>
+      <div>
+        <label htmlFor="salary-label">Salary</label>
+        <input
+          type="number"
+          id="salary-label"
+          value={salary}
+          onChange={handleSalaryChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="profitSharePercentage-label">
+          Profit Share Percentage
+        </label>
+        <input
+          type="number"
+          id="profitSharePercentage-label"
+          value={profitSharePercentage}
+          onChange={handleProfitPercentageChange}
+        />
+      </div>
+
       <div>
         <button onClick={setAddExpense}>Add Expense Item</button>
         {expenseItems.map((item) => (
